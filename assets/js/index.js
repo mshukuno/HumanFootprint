@@ -108,7 +108,9 @@ require([
       $cbNumTwo.hide();
       $fdPanel.hide();
       sessionStorage.clear();
-      goToExtent(statesLyr.fullExtent);
+      statesLyr.when(() => {
+        goToExtent(statesLyr.fullExtent);
+      });
     }
 
     function cache() {
