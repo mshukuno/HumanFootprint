@@ -19,16 +19,6 @@ Font Awesome - https://fontawesome.com/icons?d=gallery
 */
 
 
-
-///////////////////////
-// GLOBAL VARIABLES //
-//////////////////////
-/*appdconfig = config.js */
-/*hpdata = hp.data.js */
-/*censusblockinfo = censusblockinfo.js */
-/*megaregion_data = megaregion.data.js */
-/*uniquevalue = uniquevalue.js */
-
 require([
   'esri/Map',
   'esri/views/MapView',
@@ -335,15 +325,12 @@ require([
       });
 
       $btnMegastateReset.on('click', () => {
-        //setMegaregionDropdown();
         let megaregion = sessionStorage.getItem('megaregion');
         $ddMegaStates.html('');
         $ddMegaStates[0].sumo.reload();
         setMegaStateDropdown(megaregion);
         $ddMegaCounties.html('');
         $ddMegaCounties[0].sumo.reload();
-        // $ddMegaregion[0].sumo.unSelectItem(megaregion);
-        // $ddMegaregion[0].sumo.selectItem(megaregion);
         $cbNumTwo.hide();
       });
 
@@ -396,7 +383,6 @@ require([
 					d.States.forEach(s => {
             let state = s.split(' (')[0];
             let stateFip = s.match(/\((.*)\)/)[1];
-            console.log(state, stateFip);
 						$ddMegaStates[0].sumo.add(stateFip, state);
 					});
 				}
@@ -522,8 +508,6 @@ require([
       view.popup.close();
       removeTable();
       tabulate(censusblockinfo[0][customize.category], config.table.columns);
-      //getCensusBlock();
-      // hideFieldDesign();
     }
 
     function getCensusBlock(expression) {
@@ -777,7 +761,6 @@ require([
             <b>${args.fieldName}:</b> {${args.fieldName}}`
           };
           censusblockLyr.popupTemplate = popupTemplate;
-          console.log(uniquevalue[args.fieldName]);
           uniquevalue[args.fieldName].forEach(d => {
             let symbol = {
               type: 'simple-fill', 
@@ -858,8 +841,6 @@ require([
 
     /*========== Field table ========== */ 
     function tabulate(data, columns) {
-      //let ch = $('#content-container').height();
-      console.log(data);
       let table = d3.select('#data-fields')
 			.append('table')
 			.attr('class', 'table table-hover table-bordered')
@@ -893,7 +874,6 @@ require([
 				})
 				.on('click', function mouseOver(d, i){
           let selected = $(this).hasClass('highlight');
-          console.log($(this));
 					$("#table-data tr").removeClass('highlight');
 					if(!selected)
 						$(this).addClass('highlight');
@@ -991,41 +971,18 @@ require([
                 
                 $(id).removeClass('inactive');
                 
-                //isSelected = d3.select(d3.event.target.parentNode).classed('active');
                 customize.colorId = `#${e.target.parentNode.id}`;
 								if( !e.ctrlKey) {
                   d3.selectAll( 'g.active').classed('inactive', true);
                   d3.selectAll( 'g.active').classed('active', false);
 								}
-                //d3.select(d3.event.target.parentNode).classed('active', !isSelected);
                 
                 $(id).addClass('active');
-                // let childs = e.target.parentNode.childNodes,
-                // colorscheme = [];
-								// childs.forEach(d => {
-								// 	if(d.attributes.fill){
-								// 		colorscheme.push(d.attributes.fill.value);
-								// 	}
-								// });
-                // customize.colorScheme = colorscheme;
-                // console.log(customize.colorScheme);
               })
             one.append('title')
               .text(colors[c].key)
         }
     }
-    
-    // function colorSchemeActive(id, colorscheme){
-    //   $(id).addClass('active');
-    //   let childs = e.target.parentNode.childNodes;
-    //   childs.forEach(d => {
-    //     if(d.attributes.fill){
-    //       colorscheme.push(d.attributes.fill.value);
-    //     }
-    //   });
-    //   customize.colorScheme = colorscheme;
-    //   console.log(customize.colorScheme);
-    // }
     
     /*========== Map/View/Layers ========== */
     function createLayers(){
